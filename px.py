@@ -11,6 +11,8 @@
 <body>
 <script type="text/python" id="px2js">
 
+from browser import window, document
+
 def str2num(string_list):
     unique_strings = list(set(string_list))
     string_to_number_map = {string: i for i, string in enumerate(unique_strings)}
@@ -671,6 +673,8 @@ def violin(data, x=None, y=None, color=None, text=None, hover_name=None, hover_d
     div=to_plotly(traces, layout, show=show)
     return div
 </script>
+
+<script type="text/python">
 from browser import window, document
 import px2js as px
 
@@ -681,10 +685,9 @@ js_code = "new MutationObserver(mutations => mutations.forEach(mutation => { [mu
 
 # Execute the JS code
 window.eval(js_code)
-#from browser import javascript
-#javscript(js_code)
-x=[2,5,3]
-px.bar(x=x, show=True)
+
+data={"y":[2,5,3]}
+px.bar(data, y="y", show=True)
 
 </script>
 </body>
