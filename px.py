@@ -1,16 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-    
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="https://cdn.jsdelivr.net/npm/brython@3/brython.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/brython@3/brython_stdlib.js"></script>
-<script src="https://cdn.plot.ly/plotly-2.27.0.min.js" charset="utf-8"></script>
-</head>
-<body>
-<script type="text/python" id="px2js">
-
 from browser import window, document
 
 def str2num(string_list):
@@ -672,23 +659,3 @@ def violin(data, x=None, y=None, color=None, text=None, hover_name=None, hover_d
     
     div=to_plotly(traces, layout, show=show)
     return div
-</script>
-
-<script type="text/python">
-from browser import window, document
-import px2js as px
-
-# JavaScript code to set up Mutation Observer
-js_code = 'const observer = new MutationObserver(function(mutations) {mutations.forEach(function(mutation) {for (const node of mutation.addedNodes) {if (node.id && node.id.startsWith("pyplotDiv_")) {const traceSpec = window[node.id + "_data"];const layoutSpec = window[node.id + "_layout"];Plotly.newPlot(node.id, traceSpec, layoutSpec);}}});});observer.observe(document.body, {childList: true, subtree: true});'
-#js_code = 'const observer = new MutationObserver(mutations => mutations.forEach(mutation => mutation.target.id && mutation.target.id.startsWith("pyplotDiv_") && Plotly.newPlot(mutation.target.id, window[mutation.target.id + "_data"], window[mutation.target.id + "_layout"])));observer.observe(document.body, { childList: true, subtree: true });'
-js_code = "new MutationObserver(mutations => mutations.forEach(mutation => { [mutation.target, ...mutation.target.querySelectorAll('*')].forEach(el => el.id && el.id.startsWith('pyplotDiv_') ? Plotly.newPlot(el.id, window[el.id + '_data'], window[el.id + '_layout']) : null); })).observe(document.body, { childList: true, subtree: true });"
-
-# Execute the JS code
-window.eval(js_code)
-
-data={"y":[2,5,3]}
-px.bar(data, y="y", show=True)
-
-</script>
-</body>
-</html>
